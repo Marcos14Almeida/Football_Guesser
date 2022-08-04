@@ -146,7 +146,7 @@ class _MapGameplayMarkersState extends State<MapGameplayMarkers> {
     setState((){});
   }
 
-  getClubsLocation(GoogleMapController googleMapController) async{
+  Future<void> getClubsLocation(GoogleMapController googleMapController) async{
     controller = googleMapController;
     _markers = [];
     List shuffledTeamKeys = shuffle(clubDetails.map.keys.toList());

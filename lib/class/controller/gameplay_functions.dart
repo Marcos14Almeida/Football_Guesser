@@ -15,6 +15,15 @@ class Gameplay{
   List wrongAnswers = [];
   List<String> listClubOptions = ['Palmeiras','Palmeiras','Palmeiras','Palmeiras'];
 
+  boxColor(String clubName){
+    Color color = Colors.white38;
+    if(wrongAnswers.contains(clubName)){
+      color = Colors.red;
+    }else if(guessedClubName.contains(clubName)){
+      color = Colors.green;
+    }
+    return color;
+  }
 
   start(MapGameSettings mapGameSettings){
     if(mapGameSettings.mode == MapGameModeNames().modeSemErrar){

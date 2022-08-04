@@ -143,7 +143,7 @@ class _MapMenuState extends State<MapMenu> {
 
 Widget gameButton(String text, selectedNivel, Function function){
     int nStars = 0;
-    int maxStars = 9;
+    int maxStars = 12;
 
     nStars = mapGameSettings.hasStars9(
       nivel: selectedNivel,
@@ -163,9 +163,9 @@ Widget gameButton(String text, selectedNivel, Function function){
         color: Colors.transparent,
         child: InkWell(
           onTap: () async{
+            await AudioPlayer().play(AssetSource("sounds/click.mp3"));
             mapGameSettings.selectedNivel = selectedNivel;
             function();
-            await AudioPlayer().play(AssetSource("sounds/click.mp3"));
           },
         child: Container(
           padding: const EdgeInsets.all(8),
@@ -215,8 +215,8 @@ Widget gameButton(String text, selectedNivel, Function function){
       color: Colors.transparent,
       child: InkWell(
         onTap: () async{
-          function();
           await AudioPlayer().play(AssetSource("sounds/click.mp3"));
+          function();
         },
         child: Container(
           width: 120,

@@ -10,6 +10,7 @@ import 'package:map_game/class/size.dart';
 import 'package:map_game/values/club_details.dart';
 import 'package:map_game/widgets/back_button.dart';
 import 'package:map_game/widgets/gameplay/common_widgets.dart';
+import 'package:map_game/widgets/theme/custom_toast.dart';
 import 'package:map_game/widgets/theme/textstyle.dart';
 
 class MapGameplayClubStadium extends StatefulWidget {
@@ -25,8 +26,11 @@ class _MapGameplayClubStadiumState extends State<MapGameplayClubStadium> {
   Gameplay gameplay = Gameplay();
 
   ClubDetails clubDetails = ClubDetails();
-  List<Marker> _markers = <Marker>[];
-  late GoogleMapController controller;
+  late GoogleMapController controller0;
+  late GoogleMapController controller1;
+  late GoogleMapController controller2;
+  late GoogleMapController controller3;
+  int clubMarkerPosition = 0;
   List<Coordinates> coordinates = [];
   String city = '';
   late Timer timer;
@@ -47,41 +51,51 @@ class _MapGameplayClubStadiumState extends State<MapGameplayClubStadium> {
       setState((){});
     });
   }
+////////////////////////////////////////////////////////////////////////////
+//                               FUNCTIONS                                //
+////////////////////////////////////////////////////////////////////////////
+  selectController(mapNumber){
+    if(mapNumber==0){return controller0;}
+    if(mapNumber==1){return controller1;}
+    if(mapNumber==2){return controller2;}
+    if(mapNumber==3){return controller3;}
+  }
+  getController0(GoogleMapController googleMapController){
+    controller0 = googleMapController;
+    selectMainClub();
+    setClubOptions(googleMapController,0);
+  }
+  getController1(GoogleMapController googleMapController){
+    controller1 = googleMapController;
+    setClubOptions(googleMapController,1);
+  }
+  getController2(GoogleMapController googleMapController){
+    controller2 = googleMapController;
+    setClubOptions(googleMapController,2);
+  }
+  getController3(GoogleMapController googleMapController){
+    controller3 = googleMapController;
+    setClubOptions(googleMapController,3);
+  }
 
-  getClubsLocation(GoogleMapController googleMapController) async{
-    controller = googleMapController;
-
+  selectMainClub(){
+    clubMarkerPosition = Random().nextInt(4);
+    gameplay.listClubOptions = [];
+    coordinates = [];
 
     int clubID = Random().nextInt(gameplay.keysIterable.length);
     gameplay.objectiveClubName = gameplay.keysIterable.elementAt(clubID);
 
-
     if(gameplay.isTeamPermitted(gameplay.objectiveClubName, widget.mapGameSettings, clubDetails)){
-      coordinates.add(clubDetails.getCoordinate(gameplay.objectiveClubName));
-      //Zoom
-      var newPosition = CameraPosition(
-          target: LatLng(coordinates.last.latitude,coordinates.last.longitude),
-          zoom: 16);
-      CameraUpdate cameraUpdate = CameraUpdate.newCameraPosition(newPosition);
-      controller.moveCamera(cameraUpdate);
-
       city = clubDetails.getStadium(gameplay.objectiveClubName);
-
-
     }else{
-      getClubsLocation(googleMapController);
+      selectMainClub();
     }
 
-
-    setClubOptions();
-
-    setState((){});
   }
-  setClubOptions(){
-    gameplay.listClubOptions = [];
-    int clubMarkerPosition = Random().nextInt(4);
-    for(int i=0;i<4;i++){
-      if(i!=clubMarkerPosition){
+
+  setClubOptions(GoogleMapController googleMapController, int mapNumber){
+      if(mapNumber != clubMarkerPosition){
         bool isValidOption = false;
         String clubName = '';
         int i=0;
@@ -91,12 +105,25 @@ class _MapGameplayClubStadiumState extends State<MapGameplayClubStadium> {
           clubName = gameplay.keysIterable.elementAt(clubID);
           isValidOption = gameplay.isTeamPermitted(clubName, widget.mapGameSettings, clubDetails);
         }
+        coordinates.add(clubDetails.getCoordinate(clubName));
         gameplay.listClubOptions.add(clubName);
-
       }else{
+        coordinates.add(clubDetails.getCoordinate(gameplay.objectiveClubName));
         gameplay.listClubOptions.add(gameplay.objectiveClubName);
       }
-    }
+
+      setZoom(googleMapController);
+
+      setState((){});
+  }
+
+  setZoom(GoogleMapController googleMapController){
+    //Zoom
+    var newPosition = CameraPosition(
+        target: LatLng(coordinates.last.latitude,coordinates.last.longitude),
+        zoom: 15.6);
+    CameraUpdate cameraUpdate = CameraUpdate.newCameraPosition(newPosition);
+    googleMapController.moveCamera(cameraUpdate);
   }
 
   @override
@@ -122,7 +149,11 @@ class _MapGameplayClubStadiumState extends State<MapGameplayClubStadium> {
               gameInfosBar(
                 gameplay,
                 widget.mapGameSettings,
-                SizedBox(width: Sized(context).width*0.55,child: Text(city,textAlign:TextAlign.center,overflow:TextOverflow.ellipsis,style: EstiloTextoBranco.text16)),
+                SizedBox(width: Sized(context).width*0.55,child: Row(
+                  children: [
+                    Expanded(child: Text(city+clubMarkerPosition.toString(),textAlign:TextAlign.center,overflow:TextOverflow.ellipsis,maxLines:2,style: EstiloTextoBranco.text16)),
+                  ],
+                )),
               ),
 
               Expanded(child: options()),
@@ -145,8 +176,8 @@ class _MapGameplayClubStadiumState extends State<MapGameplayClubStadium> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              optionBox(gameplay.listClubOptions[0]),
-              optionBox(gameplay.listClubOptions[1]),
+              optionBox(gameplay.listClubOptions[0],getController0),
+              optionBox(gameplay.listClubOptions[1],getController1),
             ],
           ),
         ),
@@ -154,8 +185,8 @@ class _MapGameplayClubStadiumState extends State<MapGameplayClubStadium> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              optionBox(gameplay.listClubOptions[2]),
-              optionBox(gameplay.listClubOptions[3]),
+              optionBox(gameplay.listClubOptions[2], getController2),
+              optionBox(gameplay.listClubOptions[3], getController3),
             ],
           ),
         ),
@@ -163,37 +194,21 @@ class _MapGameplayClubStadiumState extends State<MapGameplayClubStadium> {
     );
   }
 
-  Widget optionBox(String clubName){
-    Color color = Colors.white38;
-    if(gameplay.wrongAnswers.contains(clubName)){
-      color = Colors.red;
-    }else if(gameplay.guessedClubName.contains(clubName)){
-      color = Colors.green;
-    }
+  Widget optionBox(String clubName, Function(GoogleMapController) controllerFunc){
 
     return Expanded(
       child: GestureDetector(
-        onTap: ()async{
-          if(clubName == gameplay.objectiveClubName){
-            gameplay.correct(widget.mapGameSettings, clubName);
-            setState((){});
-            await Future.delayed(const Duration(seconds: 1));
-            getClubsLocation(controller);
-          }else {
-            gameplay.lostLife(widget.mapGameSettings, clubName);
-          }
-          if(gameplay.nLifes==0){
-            gameplay.gameOver(widget.mapGameSettings, context);
-          }
-
-          setState((){});
-
+        onTap: () {
+          tapOption(clubName);
+        },
+        onDoubleTap: (){
+          tapOption(clubName);
         },
         child: Container(
           padding: const EdgeInsets.all(8),
           margin: const EdgeInsets.all(4),
           decoration: BoxDecoration(
-            color: color,
+            color: gameplay.boxColor(clubName),
             borderRadius: const BorderRadius.all(Radius.circular(5)),
           ),
           child: Column(
@@ -213,10 +228,10 @@ class _MapGameplayClubStadiumState extends State<MapGameplayClubStadium> {
                     target: LatLng(clubDetails.getCoordinate(clubName).latitude, clubDetails.getCoordinate(clubName).longitude),
                     zoom: 6.0,
                   ),
-                  onMapCreated: getClubsLocation,
-                  markers: Set<Marker>.of(_markers),
+                  onMapCreated: controllerFunc,
                 ),
               ),
+
 
               SizedBox(
                 height: 40,
@@ -236,8 +251,23 @@ class _MapGameplayClubStadiumState extends State<MapGameplayClubStadium> {
     );
   }
 
-////////////////////////////////////////////////////////////////////////////
-//                               FUNCTIONS                                //
-////////////////////////////////////////////////////////////////////////////
+  tapOption(String clubName){
+    if(clubName == gameplay.objectiveClubName){
+      gameplay.correct(widget.mapGameSettings, clubName);
+      setState((){});
+      getController0(controller0);
+      getController1(controller1);
+      getController2(controller2);
+      getController3(controller3);
+
+    }else {
+      gameplay.lostLife(widget.mapGameSettings, clubName);
+    }
+    if(gameplay.nLifes==0){
+      gameplay.gameOver(widget.mapGameSettings, context);
+    }
+
+    setState((){});
+  }
 
 }

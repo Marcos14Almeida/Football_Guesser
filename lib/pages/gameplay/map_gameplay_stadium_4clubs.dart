@@ -23,8 +23,8 @@ class MapGameplayStadium4Club extends StatefulWidget {
 class _MapGameplayStadium4ClubState extends State<MapGameplayStadium4Club> {
 
   Gameplay gameplay = Gameplay();
-
   ClubDetails clubDetails = ClubDetails();
+
   List<Marker> _markers = <Marker>[];
   late GoogleMapController controller;
   List<Coordinates> coordinates = [];
@@ -49,24 +49,18 @@ class _MapGameplayStadium4ClubState extends State<MapGameplayStadium4Club> {
     });
   }
 
-  ////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 //                               FUNCTIONS                                //
 ////////////////////////////////////////////////////////////////////////////
 
-  getClubsLocation(GoogleMapController googleMapController) async{
+  Future<void> getClubsLocation(GoogleMapController googleMapController) async{
     controller = googleMapController;
 
 
     int clubID = Random().nextInt(gameplay.keysIterable.length);
     gameplay.objectiveClubName = gameplay.keysIterable.elementAt(clubID);
 
-
-    String continent = clubDetails.getContinent(gameplay.objectiveClubName);
-    int capacity = clubDetails.getStadiumCapacity(gameplay.objectiveClubName);
-    if(clubDetails.getCoordinate(gameplay.objectiveClubName).latitude != 0 &&
-        widget.mapGameSettings.selectedContinents.contains(continent) &&
-        widget.mapGameSettings.stadiumSizeMin < capacity &&
-        widget.mapGameSettings.stadiumSizeMax > capacity
+    if(gameplay.isTeamPermitted(gameplay.objectiveClubName, widget.mapGameSettings, clubDetails)
     ){
       coordinates.add(clubDetails.getCoordinate(gameplay.objectiveClubName));
       //Zoom

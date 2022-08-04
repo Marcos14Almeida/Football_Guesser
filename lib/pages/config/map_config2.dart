@@ -128,9 +128,9 @@ class _MapConfig2State extends State<MapConfig2> {
             color: Colors.transparent,
             child: InkWell(
               onTap: () async{
+                await AudioPlayer().play(AssetSource("sounds/click.mp3"));
                 widget.mapGameSettings.gameplayName = gameplayName;
                 function();
-                await AudioPlayer().play(AssetSource("sounds/click.mp3"));
               },
               child: Container(
                   padding: const EdgeInsets.all(8),

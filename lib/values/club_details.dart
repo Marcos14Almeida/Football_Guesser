@@ -1186,7 +1186,7 @@ class ClubDetails{
       'Novo Estádio Municipal de Rize',15568,1953,_country.turkey];
     map[_name.samsunspor] = [ClubColors(Colors.red,Colors.white,Colors.black),pattern.stripes3,Coordinates(41.228053, 36.4579017),
       'Estádio 19 de Maio de Samsun',33919,1965,_country.turkey,];
-    map[_name.sivasspor] = [ClubColors(Colors.red,Colors.white),pattern.solid,Coordinates(39.7245242, 36.97510870),
+    map[_name.sivasspor] = [ClubColors(Colors.red,Colors.white),pattern.solid,Coordinates(39.7286940, 36.9840344),
 			'Yeni Sivas 4 Eylül Stadı',27532,1967,_country.turkey,];
     map[_name.trabzonspor] = [ClubColors(Colors.red,Colors.blue),pattern.solid,Coordinates(39.6463,40.9987),
       'Şenol Güneş Stadium',41461,1967,_country.turkey,];

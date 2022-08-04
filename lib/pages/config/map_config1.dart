@@ -70,7 +70,7 @@ class _MapConfig1State extends State<MapConfig1> {
 
   Widget optionsRow(String text, IconData icon, String mode, Function function, {bool hasStar = true}){
     int nStars = 0;
-    int maxStars = 3;
+    int maxStars = 4;
 
     nStars = widget.mapGameSettings.hasStars3(
       nivel: widget.mapGameSettings.selectedNivel,
@@ -83,9 +83,9 @@ class _MapConfig1State extends State<MapConfig1> {
         color: Colors.transparent,
         child: InkWell(
            onTap: () async{
+             await AudioPlayer().play(AssetSource("sounds/click.mp3"));
              widget.mapGameSettings.mode = mode;
             function();
-             await AudioPlayer().play(AssetSource("sounds/click.mp3"));
           },
           child: Container(
               padding: const EdgeInsets.all(8),

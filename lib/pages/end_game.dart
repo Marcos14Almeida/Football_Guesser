@@ -45,6 +45,11 @@ class _EndGameState extends State<EndGame> {
                 const Text('Tempo',style: EstiloTextoBranco.negrito18),
                 Text(widget.gameplay.milis.toString()+'s',style: EstiloTextoBranco.text40),
 
+
+                const SizedBox(height: 35),
+                const Text('Para ganhar estrela',style: EstiloTextoBranco.negrito18),
+                Text(widget.gameplay.nCorrect.toString()+'/'+MapGameModeNames().mapStarsValue(widget.mapGameSettings.mode).toString(),style: EstiloTextoBranco.text16),
+
                 const Spacer(),
                 GestureDetector(
                   onTap: (){
