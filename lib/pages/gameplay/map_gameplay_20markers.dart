@@ -54,6 +54,7 @@ class _MapGameplayMarkersState extends State<MapGameplayMarkers> {
   @override
   void dispose() {
     timer.cancel();
+    controller.dispose();
     super.dispose();
   }
   

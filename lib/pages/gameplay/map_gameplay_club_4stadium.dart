@@ -10,7 +10,6 @@ import 'package:map_game/class/size.dart';
 import 'package:map_game/values/club_details.dart';
 import 'package:map_game/widgets/back_button.dart';
 import 'package:map_game/widgets/gameplay/common_widgets.dart';
-import 'package:map_game/widgets/theme/custom_toast.dart';
 import 'package:map_game/widgets/theme/textstyle.dart';
 
 class MapGameplayClubStadium extends StatefulWidget {
@@ -129,6 +128,10 @@ class _MapGameplayClubStadiumState extends State<MapGameplayClubStadium> {
   @override
   void dispose() {
     timer.cancel();
+    controller0.dispose();
+    controller1.dispose();
+    controller2.dispose();
+    controller3.dispose();
     super.dispose();
   }
   

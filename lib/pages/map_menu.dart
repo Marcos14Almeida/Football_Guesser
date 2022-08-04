@@ -22,7 +22,7 @@ class MapMenu extends StatefulWidget {
 class _MapMenuState extends State<MapMenu> {
 
 
-  MapGameSettings mapGameSettings = MapGameSettings();
+ MapGameSettings mapGameSettings = MapGameSettings();
  bool loaded = false;
 ////////////////////////////////////////////////////////////////////////////
 //                               INIT                                     //
@@ -32,6 +32,7 @@ class _MapMenuState extends State<MapMenu> {
     onInit();
     super.initState();
   }
+
   onInit() async{
     mapGameSettings = MapGameSettings();
     mapGameSettings.setDifficulty(0);

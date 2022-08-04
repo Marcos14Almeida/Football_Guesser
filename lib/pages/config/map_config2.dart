@@ -87,7 +87,7 @@ class _MapConfig2State extends State<MapConfig2> {
               optionsRow(
                   'Location',
                   const Icon(Icons.location_on_rounded, color: Colors.white),
-                  MapGameModeNames().logos, () {
+                  MapGameModeNames().location, () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -106,21 +106,15 @@ class _MapConfig2State extends State<MapConfig2> {
 
   Widget optionsRow(
       String text, Widget image, String gameplayName, Function function) {
-    int nStars = 0;
-    int maxStars = 1;
 
-    nStars = widget.mapGameSettings.hasStar(
-      nivel: widget.mapGameSettings.selectedNivel,
-      mode: widget.mapGameSettings.mode,
-      gameplayName: gameplayName,
-    );
 
-    int record = widget.mapGameSettings.getRecord(
+    int bestRecord = widget.mapGameSettings.getRecord(
         nivel: widget.mapGameSettings.selectedNivel,
         mode: widget.mapGameSettings.mode,
         gameplayName: gameplayName);
 
-    String recordText = '${record.toString()}/' + MapGameModeNames().mapStarsValue(widget.mapGameSettings.mode).toString();
+
+    String recordText = '${bestRecord.toString()}/' + MapGameModeNames().mapStarsValue(widget.mapGameSettings.mode).toString();
 
     return Container(
         margin: const EdgeInsets.all(8),
@@ -148,7 +142,7 @@ class _MapConfig2State extends State<MapConfig2> {
                       ),
                       const Spacer(),
                       Icon(Icons.star,
-                          color: nStars == maxStars ? Colors.yellow : Colors.white,
+                          color: widget.mapGameSettings.hasStar(bestRecord: bestRecord) ? Colors.yellow : Colors.white,
                       ),
                     ],
                   )),

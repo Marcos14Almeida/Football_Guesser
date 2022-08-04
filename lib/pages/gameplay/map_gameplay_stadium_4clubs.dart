@@ -119,6 +119,7 @@ class _MapGameplayStadium4ClubState extends State<MapGameplayStadium4Club> {
   @override
   void dispose() {
     timer.cancel();
+    controller.dispose();
     super.dispose();
   }
   

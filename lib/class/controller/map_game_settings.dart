@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:map_game/class/countries_continents.dart';
 import 'package:map_game/database/shared_preferences.dart';
+import 'package:map_game/pages/gameplay/map_gameplay_city_4clubs.dart';
 import 'package:map_game/pages/gameplay/map_gameplay_stadium_4clubs.dart';
 import 'package:map_game/pages/gameplay/map_gameplay_logo.dart';
 import 'package:map_game/pages/gameplay/map_gameplay_20markers.dart';
@@ -18,6 +19,7 @@ class MapGameModeNames{
   String timeEstadio = 'TimeEstadio';
   String markers = 'Markers';
   String logos = 'Logos';
+  String location = 'Location';
 
   String modeSemErrar = 'Sem Errar';
   String mode1minute = '1 minuto';
@@ -35,6 +37,7 @@ class MapGameModeNames{
 }
 
 class MapGameSettings{
+
   List selectedContinents = [Continents().europa,Continents().americaSul,Continents().americaNorte,Continents().asia,Continents().africa];
   int difficulty = 0;
   String selectedNivel = '';
@@ -43,7 +46,7 @@ class MapGameSettings{
   int stadiumSizeMax = 200000;
   String mode = MapGameModeNames().mode1minute;
   String gameplayName = '';
-  List<String> saveNames = [];
+  List<String> starNames = [];
   List<String> records = [];
 
   setDifficulty(int i){
@@ -79,11 +82,14 @@ class MapGameSettings{
     else if(gameplayName == MapGameModeNames().logos){
       Navigator.push(context,MaterialPageRoute(builder: (context) => MapGameplayLogo(mapGameSettings: this)));
     }
+    else if(gameplayName == MapGameModeNames().location){
+      Navigator.push(context,MaterialPageRoute(builder: (context) => GameplayCity4Clubs(mapGameSettings: this)));
+    }
   }
   ///////////////////////////////////////////////////////
   int getRecord({required String nivel, required String mode,required String gameplayName}){
     int record = 0;
-    for (var saveName in records) {
+    for (String saveName in records) {
       if(saveName.contains(nivel) && saveName.contains(mode) && saveName.contains(gameplayName)){
         saveName = saveName.substring(saveName.length - 3);
         saveName = saveName.replaceAll(RegExp(r"\D"), "");
@@ -99,28 +105,45 @@ class MapGameSettings{
 
       //SALVA MELHOR PONTUAÇÃO
       records = await (SharedPreferenceHelper().getBestScore()) ?? [];
-      for (var string in records) {
-        //Verifica se contém um valor salvo
-        if(!string.contains(nameToSave)) {
-          //Se o nível ainda não tem uma pontuação
-          saveScore(records, nameToSave, nCorrect);
-        }else{
-          int record = getRecord(nivel: selectedNivel, mode: mode, gameplayName: gameplayName);
-          if(nCorrect > record){
-            saveScore(records, nameToSave, nCorrect);
+      bool containRecord = false;
+      if(records.isEmpty){
+        saveScore(records, nameToSave, nCorrect);
+      }else{
+
+        for (String string in records) {
+          //Verifica se contém um valor salvo
+          if(string.contains(nameToSave)) {
+            containRecord = true;
+            int record = getRecord(nivel: selectedNivel, mode: mode, gameplayName: gameplayName);
+            if(nCorrect > record){
+              records.remove(string); //remove a melhor pontuação anterior
+              saveScore(records, nameToSave, nCorrect);
+            }
           }
+        }
+
+        //Se o nível ainda não tem uma pontuação
+        if(!containRecord){
+          saveScore(records, nameToSave, nCorrect);
         }
       }
 
   }
+  saveScore(List<String> records, String nameToSave, int nCorrect){
+    nameToSave += nCorrect.toString();
+    records.add(nameToSave);
+    SharedPreferenceHelper().saveMapBestScore(records);
+  }
+
 
   getStarsNames(){
+    //SALVA OS RECORDES QUE TEM ESTRELA
       int record = 0;
-      saveNames = [];
+      starNames = [];
       for (var saveName in records) {
 
         //Separate Upper case letters -> [Europa, Sem Errar, Logos23] -> 23 = recorde
-          List splitted = saveName.split(RegExp(r"(?<=[a-z])(?=[A-Z])"));
+          List splitted = saveName.split(RegExp(r"(?<=[1-9a-z])(?=[A-Z])"));
           //Get final score
           String saveNameRecord = saveName.substring(saveName.length - 3);
           saveNameRecord = saveNameRecord.replaceAll(RegExp(r"\D"), "");
@@ -129,38 +152,32 @@ class MapGameSettings{
         //SE GANHAR A estrela
         if((splitted[1] == MapGameModeNames().mode1minute ||
             splitted[1] == MapGameModeNames().modeSemErrar ||
-            splitted[1] == MapGameModeNames().mode4options) && record>=MapGameModeNames().mapStarsValue(splitted[1])
+            splitted[1] == MapGameModeNames().mode4options
+        ) && record>=MapGameModeNames().mapStarsValue(splitted[1])
         ){
-            saveNames.add(saveName);
+          starNames.add(saveName);
         }
 
       }
+      print(starNames);
     }
 
-
-  saveScore(List<String> bestScore, String nameToSave, int nCorrect){
-    nameToSave += nCorrect.toString();
-    bestScore.add(nameToSave);
-    SharedPreferenceHelper().saveMapBestScore(bestScore);
-  }
 
   Future getRecords() async{
     records = await (SharedPreferenceHelper().getBestScore()) ?? [];
   }
 
-  int hasStar({required String nivel, required String mode,required String gameplayName}){
-    int nStars = 0;
-    for (var saveName in saveNames) {
-      if(saveName.contains(nivel) && saveName.contains(mode) && saveName.contains(gameplayName)){
-        nStars++;
-      }
+  bool hasStar({required int bestRecord}){
+    bool hasStar = false;
+    if(bestRecord >= MapGameModeNames().mapStarsValue(mode)){
+      hasStar = true;
     }
-    return nStars;
+    return hasStar;
   }
 
   int hasStars3({required String nivel, required String mode}){
     int nStars = 0;
-    for (var saveName in saveNames) {
+    for (String saveName in starNames) {
       if(saveName.contains(nivel) && saveName.contains(mode)){
         nStars++;
       }
@@ -170,7 +187,7 @@ class MapGameSettings{
 
   int hasStars9({required String nivel}){
     int nStars = 0;
-    for (var saveName in saveNames) {
+    for (String saveName in starNames) {
       if(saveName.contains(nivel)){
         nStars++;
       }

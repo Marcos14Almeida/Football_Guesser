@@ -16,7 +16,6 @@ class EndGame extends StatefulWidget {
 }
 
 class _EndGameState extends State<EndGame> {
-  bool hasConqueredStar = false;
 
 ////////////////////////////////////////////////////////////////////////////
 //                               INIT                                     //
@@ -27,8 +26,7 @@ class _EndGameState extends State<EndGame> {
     super.initState();
   }
   onInit() async{
-    if(widget.gameplay.nCorrect >= MapGameModeNames().mapStarsValue(widget.mapGameSettings.mode)){
-      hasConqueredStar = true;
+    if(widget.mapGameSettings.hasStar(bestRecord: widget.gameplay.nCorrect)){
       await AudioPlayer().play(AssetSource("sounds/congrats.mp3"));
     }
     setState((){});
@@ -77,11 +75,11 @@ class _EndGameState extends State<EndGame> {
                 Text(widget.gameplay.nCorrect.toString()+'/'+MapGameModeNames().mapStarsValue(widget.mapGameSettings.mode).toString(),style: EstiloTextoBranco.text16),
 
                 const SizedBox(height: 35),
-                hasConqueredStar
+                widget.mapGameSettings.hasStar(bestRecord: widget.gameplay.nCorrect)
                     ? Column(
-                      children: [
-                        const Icon(Icons.star,color: Colors.yellow, size:40),
-                        const Text('Nível conquistado',style: EstiloTextoBranco.negrito18),
+                      children: const [
+                        Icon(Icons.star,color: Colors.yellow, size:40),
+                        Text('Nível conquistado',style: EstiloTextoBranco.negrito18),
                       ],
                     )
                     : Container(),

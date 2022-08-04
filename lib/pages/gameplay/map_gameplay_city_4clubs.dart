@@ -120,6 +120,7 @@ class _GameplayCity4ClubsState extends State<GameplayCity4Clubs> {
   @override
   void dispose() {
     timer.cancel();
+    controller.dispose();
     super.dispose();
   }
 ////////////////////////////////////////////////////////////////////////////
