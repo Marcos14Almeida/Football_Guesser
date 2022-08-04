@@ -1,16 +1,21 @@
-# map_game
+# Football Guesser: Maps & Stadiums
 
-Jogo de adivinhar estádios e clubes de futebol, além de sua localização.
+Jogo de adivinhar estádios, clubes de futebol e sua localização.
 
-## Getting Started
+## Descrição do Projeto 
+Jogo de adivinhação de futebol com vários modos para dispositivos Android. Feito grande parte em 07~08/2022.
 
-This project is a starting point for a Flutter application.
+## Como usar o Projeto 
+O jogo consiste em adivinhar o estádio de um time de futebol, adivinhar o time de futebol dono do estádio, adivinhar logo de clubes ou ainda adivinhar a localização de um time de futebol em um mapa. O jogo conta com alguns modos como o normal com 3 vidas, o sem errar e o contra-relógio com 1 minuto para acertar o máximo possível. Além disso existem níveis de dificuldade e o jogador pode selecionar também o jogo por continente.
 
-A few resources to get you started if this is your first Flutter project:
+## Como Executar o projeto
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Você precisa ter o Flutter devidamente instalado no seu computador, depois disso: 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+copie o projeto digiando no terminal:
+-git clone https://github.com/Marcos14Almeida/FIFA-Flutter/
+
+Depois rode o código digitando no terminal
+-flutter run
+
+## Screenshot
