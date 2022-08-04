@@ -6,7 +6,7 @@ import 'package:map_game/pages/gameplay/map_gameplay_city_4clubs.dart';
 import 'package:map_game/pages/gameplay/map_gameplay_stadium_4clubs.dart';
 import 'package:map_game/pages/gameplay/map_gameplay_club_4stadium.dart';
 import 'package:map_game/pages/gameplay/map_gameplay_logo.dart';
-import 'package:map_game/pages/gameplay/map_gameplay_15markers.dart';
+import 'package:map_game/pages/gameplay/map_gameplay_20markers.dart';
 import 'package:map_game/widgets/theme/colors.dart';
 import 'package:map_game/widgets/theme/textstyle.dart';
 import 'package:map_game/widgets/back_button.dart';

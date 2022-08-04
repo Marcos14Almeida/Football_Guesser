@@ -152,7 +152,6 @@ class _MapGameplayStadium4ClubState extends State<MapGameplayStadium4Club> {
                   //zoomControlsEnabled: false, //SEM ZOOM
                   initialCameraPosition: const CameraPosition(
                     target: LatLng(0, 0),
-                    zoom: 6.0,
                   ),
                   onMapCreated: getClubsLocation,
                   markers: Set<Marker>.of(_markers),
@@ -191,12 +190,6 @@ class _MapGameplayStadium4ClubState extends State<MapGameplayStadium4Club> {
   }
 
   Widget optionBox(String clubName){
-    Color color = Colors.white38;
-    if(gameplay.wrongAnswers.contains(clubName)){
-      color = Colors.red;
-    }else if(gameplay.guessedClubName.contains(clubName)){
-      color = Colors.green;
-    }
 
     return Expanded(
       child: GestureDetector(
@@ -221,7 +214,7 @@ class _MapGameplayStadium4ClubState extends State<MapGameplayStadium4Club> {
           padding: const EdgeInsets.all(8),
           margin: const EdgeInsets.all(2),
           decoration: BoxDecoration(
-            color: color,
+            color: gameplay.boxColor(clubName),
             borderRadius: const BorderRadius.all(Radius.circular(5)),
           ),
           child: Row(

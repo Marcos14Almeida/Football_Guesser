@@ -176,12 +176,6 @@ class _MapGameplayLogoState extends State<MapGameplayLogo> {
   }
 
   Widget optionBox(String clubName){
-    Color color = Colors.white38;
-    if(gameplay.wrongAnswers.contains(clubName)){
-      color = Colors.red;
-    }else if(gameplay.guessedClubName.contains(clubName)){
-      color = Colors.green;
-    }
 
     return Expanded(
       child: GestureDetector(
@@ -207,7 +201,7 @@ class _MapGameplayLogoState extends State<MapGameplayLogo> {
             padding: const EdgeInsets.all(8),
             margin: const EdgeInsets.all(4),
             decoration: BoxDecoration(
-              color: color,
+              color: gameplay.boxColor(clubName),
               borderRadius: const BorderRadius.all(Radius.circular(5)),
             ),
             child: Row(

@@ -58,10 +58,10 @@ class _MapMenuState extends State<MapMenu> {
                 const SizedBox(height: 35),
                 const Text('FOOTBALL GUESSER',style: EstiloTextoBranco.text30),
 
-                loaded ? SingleChildScrollView(
+                loaded ? Expanded(
                   child: Container(
                     width: Sized(context).width,
-                    margin: const EdgeInsets.all(12),
+                    margin: const EdgeInsets.only(top: 12,left:12,right: 12),
                     padding: const EdgeInsets.all(12),
                     decoration: const BoxDecoration(
                         gradient: LinearGradient(
@@ -75,50 +75,52 @@ class _MapMenuState extends State<MapMenu> {
                         ),
                       borderRadius: BorderRadius.all(Radius.circular(5)),
                     ),
-                    child: Column(
-                      children: [
-                            gameButton('Nível 1',MapGameModeNames().nivel1,(){
-                              mapGameSettings.setDifficulty(1);
-                              Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
-                            }),
-                            gameButton('Nível 2',MapGameModeNames().nivel2,(){
-                              mapGameSettings.setDifficulty(2);
-                              Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
-                            }),
-                            gameButton('Nível 3',MapGameModeNames().nivel3,(){
-                              mapGameSettings.setDifficulty(3);
-                              Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
-                            }),
-                        const SizedBox(height: 12),
-                            gameButton('Europa',Continents().europa,(){
-                              mapGameSettings.selectedContinents = [Continents().europa];
-                              Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
-                            }),
-                            gameButton('América do Sul',Continents().americaSul,(){
-                              mapGameSettings.selectedContinents = [Continents().americaSul];
-                              Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
-                            }),
-                            gameButton('América do Norte',Continents().americaNorte,(){
-                              mapGameSettings.selectedContinents = [Continents().americaNorte];
-                              Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
-                            }),
-                            gameButton('África', Continents().africa,(){
-                              mapGameSettings.selectedContinents = [Continents().africa];
-                              Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
-                            }),
-                            gameButton('Ásia',Continents().asia,(){
-                              mapGameSettings.selectedContinents = [Continents().asia,Continents().oceania];
-                              Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
-                            }),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                              gameButton('Nível 1',MapGameModeNames().nivel1,(){
+                                mapGameSettings.setDifficulty(1);
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
+                              }),
+                              gameButton('Nível 2',MapGameModeNames().nivel2,(){
+                                mapGameSettings.setDifficulty(2);
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
+                              }),
+                              gameButton('Nível 3',MapGameModeNames().nivel3,(){
+                                mapGameSettings.setDifficulty(3);
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
+                              }),
+                          const SizedBox(height: 12),
+                              gameButton('Europa',Continents().europa,(){
+                                mapGameSettings.selectedContinents = [Continents().europa];
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
+                              }),
+                              gameButton('América do Sul',Continents().americaSul,(){
+                                mapGameSettings.selectedContinents = [Continents().americaSul];
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
+                              }),
+                              gameButton('América do Norte',Continents().americaNorte,(){
+                                mapGameSettings.selectedContinents = [Continents().americaNorte];
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
+                              }),
+                              gameButton('África', Continents().africa,(){
+                                mapGameSettings.selectedContinents = [Continents().africa];
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
+                              }),
+                              gameButton('Ásia',Continents().asia,(){
+                                mapGameSettings.selectedContinents = [Continents().asia,Continents().oceania];
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
+                              }),
 
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ) : Container(),
 
-                const Spacer(),
+
                 Container(
-                  margin: const EdgeInsets.all(8),
+                  margin: const EdgeInsets.only(left:8,right: 8,bottom: 8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -157,8 +159,9 @@ Widget gameButton(String text, selectedNivel, Function function){
       hasContinent = false;
     }
 
-    return SizedBox(
+    return Container(
       width: Sized(context).width-50,
+      margin: const EdgeInsets.all(4),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -168,7 +171,7 @@ Widget gameButton(String text, selectedNivel, Function function){
             function();
           },
         child: Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(4),
           decoration: decorations(),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,

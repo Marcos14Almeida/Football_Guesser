@@ -4,7 +4,7 @@ import 'package:map_game/class/countries_continents.dart';
 import 'package:map_game/database/shared_preferences.dart';
 import 'package:map_game/pages/gameplay/map_gameplay_stadium_4clubs.dart';
 import 'package:map_game/pages/gameplay/map_gameplay_logo.dart';
-import 'package:map_game/pages/gameplay/map_gameplay_15markers.dart';
+import 'package:map_game/pages/gameplay/map_gameplay_20markers.dart';
 
 import '../../pages/gameplay/map_gameplay_club_4stadium.dart';
 

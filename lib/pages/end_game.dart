@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:map_game/class/controller/gameplay_functions.dart';
 import 'package:map_game/class/controller/map_game_settings.dart';
@@ -15,13 +16,30 @@ class EndGame extends StatefulWidget {
 }
 
 class _EndGameState extends State<EndGame> {
-  int points = 5;
+  bool hasConqueredStar = false;
 
 ////////////////////////////////////////////////////////////////////////////
 //                               INIT                                     //
 ////////////////////////////////////////////////////////////////////////////
   @override
+  void initState() {
+    onInit();
+    super.initState();
+  }
+  onInit() async{
+    if(widget.gameplay.nCorrect >= MapGameModeNames().mapStarsValue(widget.mapGameSettings.mode)){
+      hasConqueredStar = true;
+      await AudioPlayer().play(AssetSource("sounds/congrats.mp3"));
+    }
+    setState((){});
+  }
+
+////////////////////////////////////////////////////////////////////////////
+//                               BUILD                                    //
+////////////////////////////////////////////////////////////////////////////
+  @override
   Widget build(BuildContext context) {
+    int record = widget.mapGameSettings.getRecord(nivel: widget.mapGameSettings.selectedNivel, mode: widget.mapGameSettings.mode, gameplayName: widget.mapGameSettings.gameplayName);
     return Scaffold(
       body: Stack(
         children: [
@@ -36,9 +54,15 @@ class _EndGameState extends State<EndGame> {
                 const Text('Fim da partida',style: EstiloTextoBranco.text30),
                 const SizedBox(height: 35),
                 const Text('Modo',style: EstiloTextoBranco.negrito18),
-                Text(widget.mapGameSettings.selectedNivel,style: EstiloTextoBranco.text16),
-                Text(widget.mapGameSettings.gameplayName,style: EstiloTextoBranco.text16),
-                Text(widget.mapGameSettings.mode,style: EstiloTextoBranco.text16),
+                const SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(widget.mapGameSettings.selectedNivel,textAlign:TextAlign.center,style: EstiloTextoBranco.text16),
+                    Text(widget.mapGameSettings.gameplayName,textAlign:TextAlign.center,style: EstiloTextoBranco.text16),
+                    Text(widget.mapGameSettings.mode,textAlign:TextAlign.center,style: EstiloTextoBranco.text16),
+                  ],
+                ),
                 const SizedBox(height: 35),
                 const Text('Pontuação final',style: EstiloTextoBranco.negrito18),
                 Text(widget.gameplay.nCorrect.toString(),style: EstiloTextoBranco.text40),
@@ -47,8 +71,22 @@ class _EndGameState extends State<EndGame> {
 
 
                 const SizedBox(height: 35),
+                const Text('Seu recorde',style: EstiloTextoBranco.negrito18),
+                Text(record.toString(),style: EstiloTextoBranco.text16),
                 const Text('Para ganhar estrela',style: EstiloTextoBranco.negrito18),
                 Text(widget.gameplay.nCorrect.toString()+'/'+MapGameModeNames().mapStarsValue(widget.mapGameSettings.mode).toString(),style: EstiloTextoBranco.text16),
+
+                const SizedBox(height: 35),
+                hasConqueredStar
+                    ? Column(
+                      children: [
+                        const Icon(Icons.star,color: Colors.yellow, size:40),
+                        const Text('Nível conquistado',style: EstiloTextoBranco.negrito18),
+                      ],
+                    )
+                    : Container(),
+
+
 
                 const Spacer(),
                 GestureDetector(
