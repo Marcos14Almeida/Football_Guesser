@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -6,6 +7,7 @@ import 'package:map_game/class/controller/gameplay_functions.dart';
 import 'package:map_game/class/controller/map_game_settings.dart';
 import 'package:map_game/class/image_class.dart';
 import 'package:map_game/class/size.dart';
+import 'package:map_game/values/club_details.dart';
 import 'package:map_game/widgets/back_button.dart';
 import 'package:map_game/widgets/gameplay/common_widgets.dart';
 import 'package:map_game/widgets/theme/textstyle.dart';
@@ -21,6 +23,9 @@ class GameplayCity4Clubs extends StatefulWidget {
 class _GameplayCity4ClubsState extends State<GameplayCity4Clubs> {
 
   Gameplay gameplay = Gameplay();
+  ClubDetails clubDetails = ClubDetails();
+  List<Marker> _markers = <Marker>[];
+  late GoogleMapController controller;
   late Timer timer;
 
   ////////////////////////////////////////////////////////////////////////////
@@ -29,13 +34,72 @@ class _GameplayCity4ClubsState extends State<GameplayCity4Clubs> {
   @override
   void initState() {
     initMap();
+    defineNewClubTarget();
     super.initState();
   }
   initMap(){
+    gameplay.start(widget.mapGameSettings);
+
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      gameplay.milis++;
+      gameplay.updateTimer(widget.mapGameSettings, context);
       setState((){});
     });
+  }
+  defineNewClubTarget(){
+    int clubID = Random().nextInt(gameplay.keysIterable.length);
+    gameplay.objectiveClubName = gameplay.keysIterable.elementAt(clubID);
+
+    if(!gameplay.isTeamPermitted(gameplay.objectiveClubName, widget.mapGameSettings, clubDetails)){
+      defineNewClubTarget();
+    }
+    setState((){});
+  }
+
+  getClubsLocation(GoogleMapController googleMapController) async{
+    controller = googleMapController;
+    addMarker(gameplay.objectiveClubName, googleMapController);
+
+    //Zoom
+    var newPosition = CameraPosition(
+        target: LatLng(clubDetails.getCoordinate(gameplay.objectiveClubName).latitude,clubDetails.getCoordinate(gameplay.objectiveClubName).longitude),
+        zoom: 5);
+    CameraUpdate cameraUpdate = CameraUpdate.newCameraPosition(newPosition);
+    controller.moveCamera(cameraUpdate);
+
+    setState((){});
+  }
+  addMarker(String clubName, GoogleMapController googleMapController){
+
+    //ADD MARKER
+    _markers.add(
+      Marker(
+        markerId: MarkerId(clubName),
+        position: LatLng(
+            clubDetails.getCoordinate(clubName).latitude, clubDetails.getCoordinate(clubName).longitude),
+        onTap: () async {
+          if(clubName == gameplay.objectiveClubName){
+            gameplay.correct(widget.mapGameSettings, clubName);
+            setState((){});
+            await Future.delayed(const Duration(seconds: 1));
+            defineNewClubTarget();
+            //Zoom
+            var newPosition = CameraPosition(
+                target: LatLng(clubDetails.getCoordinate(gameplay.objectiveClubName).latitude, clubDetails.getCoordinate(gameplay.objectiveClubName).longitude),
+                zoom: 3);
+            CameraUpdate cameraUpdate = CameraUpdate.newCameraPosition(newPosition);
+            controller.moveCamera(cameraUpdate);
+
+          }else{
+            gameplay.lostLife(widget.mapGameSettings, clubName);
+          }
+          if(gameplay.nLifes==0){
+            gameplay.gameOver(widget.mapGameSettings, context);
+          }
+        },
+        infoWindow: InfoWindow(title: clubName),
+        //icon: clubsAllNameList.indexOf(clubName) < 40 ? _markersIcons[clubsAllNameList.indexOf(clubName)] : BitmapDescriptor.defaultMarker,
+      ),
+    );
   }
   @override
   void dispose() {
@@ -61,7 +125,10 @@ class _GameplayCity4ClubsState extends State<GameplayCity4Clubs> {
               gameInfosBar(
                 gameplay,
                 widget.mapGameSettings,
-                SizedBox(width: Sized(context).width*0.55),
+                  SizedBox(
+                      width: Sized(context).width*0.55,
+                      child: Text(gameplay.objectiveClubName,textAlign:TextAlign.center,overflow:TextOverflow.ellipsis,style: EstiloTextoBranco.negrito18)
+                  ),
               ),
 
               const Expanded(
@@ -74,7 +141,7 @@ class _GameplayCity4ClubsState extends State<GameplayCity4Clubs> {
                   zoomControlsEnabled: false, //SEM ZOOM
                   initialCameraPosition: CameraPosition(
                     target: LatLng(0, 0),
-                    zoom: 7.0,
+                    zoom: 5.0,
                   ),
                   //onMapCreated: getClubsLocation,
                   //markers: Set<Marker>.of(_markers),

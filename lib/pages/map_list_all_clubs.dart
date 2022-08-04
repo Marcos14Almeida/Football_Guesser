@@ -52,9 +52,9 @@ class _MapListAllClubsState extends State<MapListAllClubs> {
         }
       }
     });
-    selectedCountry = countryOptions.first;
     setState((){});
     countryOptions.sort();
+    selectedCountry = countryOptions.first;
     setState((){});
   }
 

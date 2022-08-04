@@ -4,7 +4,6 @@ import 'package:map_game/class/size.dart';
 import 'package:map_game/database/shared_preferences.dart';
 import 'package:map_game/widgets/back_button.dart';
 import 'package:map_game/widgets/theme/colors.dart';
-import 'package:map_game/widgets/theme/custom_toast.dart';
 import 'package:map_game/widgets/theme/textstyle.dart';
 
 class Settings extends StatefulWidget {
@@ -34,14 +33,18 @@ class _SettingsState extends State<Settings> {
             children: [
               backButtonText(context, 'Configurações'),
 
-              button('Sobre o autor', Icons.info_outline, (){
-
+              button('Sobre', Icons.info_outline, (){
+                bottomSheet('Seja o craque do futebol!!!\n\nAcerte onde fica cada estádio, descubra a qual clube pertence cada estádio, acerte o local de cada clube. Jogue diferentes níveis, com diferentes continentes e em diferentes modos para vencer o jogo e ser o GOAT de Football Guesser. \n\nGame feito com muito amor por Marcos P. Almeida em 08/2022. 😍💕!!!');
               }),
               button('Resetar o progresso', Icons.delete, (){
                 resetProgressBottomSheet();
               }),
-              button('Termos de Uso', Icons.note, (){}),
-              button('Entre em contato', Icons.contact_mail, (){customToast('Email: marcos.10palmeida@gmail.com');}),
+              button('Termos de Uso', Icons.note, (){
+
+              }),
+              button('Entre em contato', Icons.contact_mail, (){
+                bottomSheet('Email: marcos.10palmeida@gmail.com');
+              }),
 
               ],
           ),
@@ -71,7 +74,6 @@ class _SettingsState extends State<Settings> {
                       Icon(icon,color: Colors.grey,size: 35),
                       const SizedBox(width: 20),
                       Text(text,textAlign:TextAlign.center,style: EstiloTextoBranco.negrito18,),
-
                     ],
                   ),
                 ),
@@ -91,30 +93,59 @@ class _SettingsState extends State<Settings> {
     );
   }
 
-  resetProgressBottomSheet(){
+  bottomSheet(String text){
     return showModalBottomSheet<void>(
         context: context,
         builder: (BuildContext context) {
           return Container(
             height: 200,
-            color: Colors.amber,
+            color: Colors.greenAccent,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  const Text('Deseja Realmente Apagar o seu progresso?'),
-                  ElevatedButton(
-                    child: const Text('Cancelar'),
-                    onPressed: () => Navigator.pop(context),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(child: Text(text,textAlign: TextAlign.center)),
                   ),
-                  ElevatedButton(
-                      child: const Text('Deletar'),
-                      onPressed: () {
-                        SharedPreferenceHelper().saveMapBestScore([]);
-                        Navigator.pop(context);
-                      }
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  resetProgressBottomSheet(){
+    return showModalBottomSheet<void>(
+        context: context,
+        builder: (BuildContext c) {
+          return Container(
+            height: 200,
+            color: Colors.greenAccent,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const Text('Deseja realmente apagar o seu progresso?'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                          child: const Text('Deletar'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.red,
+                        ),
+                          onPressed: () {
+                            SharedPreferenceHelper().saveMapBestScore([]);
+                            Navigator.pop(c);
+                            Navigator.pop(context);
+                          }
+                      ),
+                    ],
                   ),
+
                 ],
               ),
             ),

@@ -1,4 +1,5 @@
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:map_game/class/countries_continents.dart';
 import 'package:map_game/class/image_class.dart';
@@ -161,9 +162,10 @@ Widget gameButton(String text, selectedNivel, Function function){
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: (){
+          onTap: () async{
             mapGameSettings.selectedNivel = selectedNivel;
             function();
+            await AudioPlayer().play(AssetSource("sounds/click.mp3"));
           },
         child: Container(
           padding: const EdgeInsets.all(8),
@@ -212,8 +214,9 @@ Widget gameButton(String text, selectedNivel, Function function){
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: (){
+        onTap: () async{
           function();
+          await AudioPlayer().play(AssetSource("sounds/click.mp3"));
         },
         child: Container(
           width: 120,

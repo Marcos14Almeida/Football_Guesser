@@ -40,8 +40,10 @@ class _MapGameplayClubStadiumState extends State<MapGameplayClubStadium> {
     super.initState();
   }
   initMap(){
+    gameplay.start(widget.mapGameSettings);
+
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      gameplay.milis++;
+      gameplay.updateTimer(widget.mapGameSettings, context);
       setState((){});
     });
   }
@@ -62,18 +64,6 @@ class _MapGameplayClubStadiumState extends State<MapGameplayClubStadium> {
           zoom: 16);
       CameraUpdate cameraUpdate = CameraUpdate.newCameraPosition(newPosition);
       controller.moveCamera(cameraUpdate);
-      //ADD MARKER
-      _markers = [];
-      _markers.add(
-        Marker(
-          markerId: MarkerId(gameplay.objectiveClubName),
-          position: LatLng(coordinates.last.latitude,coordinates.last.longitude),
-          onTap: () async{
-          },
-          //infoWindow: InfoWindow(title: clubName),
-          //icon: clubsAllNameList.indexOf(clubName) < 40 ? _markerssIcons[clubsAllNameList.indexOf(clubName)] : BitmapDescriptor.defaultMarker,
-        ),
-      );
 
       city = clubDetails.getStadium(gameplay.objectiveClubName);
 
@@ -235,7 +225,8 @@ class _MapGameplayClubStadiumState extends State<MapGameplayClubStadium> {
                     child: Row(
                       children: [
                         Images().getEscudoWidget(clubName,25,25),
-                        Text(clubName,style: EstiloTextoBranco.text12),
+                        const SizedBox(width: 8),
+                        Expanded(child: Text(clubName,maxLines:2,style: EstiloTextoBranco.text12)),
                       ],
                     )),),
             ],

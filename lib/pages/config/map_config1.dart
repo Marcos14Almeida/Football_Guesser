@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:map_game/class/image_class.dart';
 import 'package:map_game/class/controller/map_game_settings.dart';
@@ -81,9 +82,10 @@ class _MapConfig1State extends State<MapConfig1> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-           onTap: (){
+           onTap: () async{
              widget.mapGameSettings.mode = mode;
             function();
+             await AudioPlayer().play(AssetSource("sounds/click.mp3"));
           },
           child: Container(
               padding: const EdgeInsets.all(8),

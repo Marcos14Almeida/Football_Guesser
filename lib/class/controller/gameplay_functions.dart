@@ -31,6 +31,7 @@ class Gameplay{
       milis--;
       if(milis <= 0){
         gameOver(mapGameSettings, context);
+        milis = 0;
       }
     }else{
       milis++;
@@ -56,9 +57,7 @@ class Gameplay{
     nCorrect++;
     wrongAnswers = [];
     guessedClubName = clubName;
-    AudioPlayer player = AudioPlayer();
-    String audioasset = "sounds/correct.mp3";
-    await player.play(AssetSource(audioasset));
+    await AudioPlayer().play(AssetSource("sounds/correct.mp3"));
   }
 
   lostLife(MapGameSettings mapGameSettings,String clubName) async {
@@ -69,9 +68,7 @@ class Gameplay{
       milis -= 5;
     }
 
-    AudioPlayer player = AudioPlayer();
-    String audioasset = "sounds/error.mp3";
-    await player.play(AssetSource(audioasset));
+    await AudioPlayer().play(AssetSource("sounds/error.mp3"));
   }
 
   bool isTeamPermitted(String clubName, MapGameSettings mapGameSettings,ClubDetails clubDetails){
