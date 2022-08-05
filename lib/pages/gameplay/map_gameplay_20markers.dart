@@ -157,7 +157,7 @@ class _MapGameplayMarkersState extends State<MapGameplayMarkers> {
     for (var clubName in shuffledTeamKeys) {
 
       if (gameplay.isTeamPermitted(clubName, widget.mapGameSettings, clubDetails) &&
-          _markers.length<20
+          _markers.length<15
       ) {
         coordinates.add(clubDetails.getCoordinate(clubName));
 

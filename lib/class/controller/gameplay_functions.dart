@@ -83,11 +83,11 @@ class Gameplay{
   bool isTeamPermitted(String clubName, MapGameSettings mapGameSettings,ClubDetails clubDetails){
 
     String continent = clubDetails.getContinent(clubName);
-    int capacity = clubDetails.getStadiumCapacity(clubName);
+    double ovr = clubDetails.getOverall(clubName);
     if(clubDetails.getCoordinate(clubName).latitude != 0 &&
         mapGameSettings.selectedContinents.contains(continent) &&
-        mapGameSettings.stadiumSizeMin < capacity &&
-        mapGameSettings.stadiumSizeMax > capacity
+        mapGameSettings.ovrMin < ovr &&
+        mapGameSettings.ovrMax > ovr
     ){
       return true;
     }

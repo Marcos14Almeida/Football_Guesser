@@ -236,7 +236,7 @@ List<String> globalCountryNames = [
   word.sanMarino,word.stKitts,word.scotland,word.senegal,word.serbia,word.slovakia,word.slovenia,word.somalia,
     word.southArabia,word.southKorea,word.southAfrica,word.spain,word.sudan,
     word.suriname,word.sweden,word.switzerland,word.syria,
-  word.tanzania,word.thailand,word.togo,word.trinidadTobago,word.tunisia,word.turkey,word.turkmenistan,
+  word.tajikistan,word.tanzania,word.thailand,word.togo,word.trinidadTobago,word.tunisia,word.turkey,word.turkmenistan,
   word.uganda,word.ukraine,word.uae,word.unitedStates,word.uruguay,word.uzbekistan,
   word.venezuela,word.vietnam,
   word.wales,

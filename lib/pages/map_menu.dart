@@ -35,6 +35,10 @@ class _MapMenuState extends State<MapMenu> {
 
   onInit() async{
     mapGameSettings = MapGameSettings();
+    update();
+    setState((){});
+  }
+  update() async{
     mapGameSettings.setDifficulty(0);
     await mapGameSettings.getRecords();
     mapGameSettings.getStarsNames();
@@ -47,7 +51,7 @@ class _MapMenuState extends State<MapMenu> {
 ////////////////////////////////////////////////////////////////////////////
   @override
   Widget build(BuildContext context) {
-    onInit();
+    update();
 
     return Scaffold(
         body: Stack(
@@ -145,16 +149,15 @@ class _MapMenuState extends State<MapMenu> {
 ////////////////////////////////////////////////////////////////////////////
 
 Widget gameButton(String text, selectedNivel, Function function){
-    int nStars = 0;
     int maxStars = 12;
 
-    nStars = mapGameSettings.hasStars9(
+    int nStars = mapGameSettings.hasStars9(
       nivel: selectedNivel,
     );
 
     bool hasContinent = false;
     try{
-      Images().getContinentLogo(selectedNivel);
+      Images().getMenuImages(selectedNivel);
       hasContinent = true;
     }catch(e){
       hasContinent = false;
@@ -177,7 +180,7 @@ Widget gameButton(String text, selectedNivel, Function function){
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              hasContinent ? Image.asset(Images().getContinentLogo(selectedNivel),height: 35,width: 35) : Container(width: 35),
+              hasContinent ? Image.asset(Images().getMenuImages(selectedNivel),height: 35,width: 35) : Container(width: 35),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -206,11 +209,11 @@ Widget gameButton(String text, selectedNivel, Function function){
   BoxDecoration decorations(){
     return BoxDecoration(
         color: AppColors().greyTransparent,
-  borderRadius: const BorderRadius.all(Radius.circular(5)),
-  border: Border.all(
-  width: 2.0,
-  color: Colors.greenAccent,
-  )
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
+        border: Border.all(
+          width: 2.0,
+          color: Colors.greenAccent,
+        )
     );
 }
 

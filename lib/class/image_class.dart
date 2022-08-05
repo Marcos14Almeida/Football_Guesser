@@ -50,32 +50,11 @@ class Images{
   }
 
 
-  String getStadium(String clubName){
-    return 'assets/clubs/${imageLogo(clubName)}0.jpg';
-  }
-  Widget getStadiumWidget(String clubName,[double _height=50.0, double _width=50.0]){
-      return Image.asset(Images().getStadium(clubName),height: _height,width: _width,fit: BoxFit.fill,
-      errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-        //Se o clube não tiver a imagem do estadio
-        return Image.asset('assets/clubs/generic0.jpg',height: _height,width: _width,fit: BoxFit.fill);
-      });
-  }
-
-
   Widget getWallpaper(){
     return Image.asset('assets/icons/wallpaper.png',height: double.infinity,width: double.infinity,fit: BoxFit.fill);
   }
 
-  BoxDecoration getWallpaperContainerDecoration(){
-    return const BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage('assets/icons/wallpaper.png'),
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-
-  String getContinentLogo(String continent) {
+  String getMenuImages(String continent) {
     Map map = {};
     map[Continents().europa] = 'assets/continents/europe.png';
     map[Continents().americaSul] = 'assets/continents/south america.png';

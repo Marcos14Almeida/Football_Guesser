@@ -48,12 +48,7 @@ class _MapGameplayLogoState extends State<MapGameplayLogo> {
   setLogoClub(){
     int clubID = Random().nextInt(gameplay.keysIterable.length);
     gameplay.objectiveClubName = gameplay.keysIterable.elementAt(clubID);
-    String continent = clubDetails.getContinent(gameplay.objectiveClubName);
-    if(clubDetails.getCoordinate(gameplay.objectiveClubName).latitude != 0 &&
-        widget.mapGameSettings.selectedContinents.contains(continent) &&
-        widget.mapGameSettings.stadiumSizeMin < clubDetails.getStadiumCapacity(gameplay.objectiveClubName)){
-      //
-    }else{
+    if(!gameplay.isTeamPermitted(gameplay.objectiveClubName, widget.mapGameSettings, clubDetails)){
       setLogoClub();
     }
   }

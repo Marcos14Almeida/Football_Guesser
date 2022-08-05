@@ -38,6 +38,7 @@ class _EndGameState extends State<EndGame> {
   @override
   Widget build(BuildContext context) {
     int record = widget.mapGameSettings.getRecord(nivel: widget.mapGameSettings.selectedNivel, mode: widget.mapGameSettings.mode, gameplayName: widget.mapGameSettings.gameplayName);
+
     return Scaffold(
       body: Stack(
         children: [

@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:map_game/class/size.dart';
 import 'package:map_game/widgets/theme/textstyle.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,8 @@ Widget backButton(BuildContext context){
             await AudioPlayer().play(AssetSource("sounds/click.mp3"));
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back_ios,color: Colors.white,size: 30));
+          icon: const Icon(Icons.arrow_back_ios,color: Colors.white,size: 30),
+  );
 }
 
 Widget backButtonText(BuildContext context, String text){
@@ -18,7 +20,10 @@ Widget backButtonText(BuildContext context, String text){
       children: [
         const SizedBox(width: 8),
         backButton(context),
-        Text(text,overflow:TextOverflow.ellipsis,maxLines:1,style: EstiloTextoBranco.text22),
+        SizedBox(
+            width: Sized(context).width-100,
+            child: Text(text,overflow:TextOverflow.ellipsis,style: EstiloTextoBranco.text20),
+        ),
       ],
     ),
   );

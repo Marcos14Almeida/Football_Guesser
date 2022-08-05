@@ -38,8 +38,8 @@ class _MapListAllClubsState extends State<MapListAllClubs> {
 
     showList = keysIterable;
     showList = showList.where((clubName) => clubDetails.getCoordinate(clubName).latitude != 0);
-    showList = showList.where((clubName) => clubDetails.getStadiumCapacity(clubName) > widget.mapGameSettings.stadiumSizeMin);
-    showList = showList.where((clubName) => clubDetails.getStadiumCapacity(clubName) < widget.mapGameSettings.stadiumSizeMax);
+    showList = showList.where((clubName) => clubDetails.getOverall(clubName) > widget.mapGameSettings.ovrMin);
+    showList = showList.where((clubName) => clubDetails.getOverall(clubName) < widget.mapGameSettings.ovrMax);
 
     clubDetails.map.forEach((key, value) {
       if(showList.contains(key)) {
@@ -66,8 +66,8 @@ class _MapListAllClubsState extends State<MapListAllClubs> {
     //Filtra os clubes do país
     showList = keysIterable.where((clubName) => selectedCountry == clubDetails.getCountry(clubName));
     showList = showList.where((clubName) => clubDetails.getCoordinate(clubName).latitude != 0);
-    showList = showList.where((clubName) => clubDetails.getStadiumCapacity(clubName) > widget.mapGameSettings.stadiumSizeMin);
-    showList = showList.where((clubName) => clubDetails.getStadiumCapacity(clubName) < widget.mapGameSettings.stadiumSizeMax);
+    showList = showList.where((clubName) => clubDetails.getOverall(clubName) > widget.mapGameSettings.ovrMin);
+    showList = showList.where((clubName) => clubDetails.getOverall(clubName) < widget.mapGameSettings.ovrMax);
 
     return Scaffold(
       body: Stack(

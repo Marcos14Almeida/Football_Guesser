@@ -5,6 +5,7 @@ import 'package:map_game/database/shared_preferences.dart';
 import 'package:map_game/widgets/back_button.dart';
 import 'package:map_game/widgets/theme/colors.dart';
 import 'package:map_game/widgets/theme/textstyle.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -39,8 +40,13 @@ class _SettingsState extends State<Settings> {
               button('Resetar o progresso', Icons.delete, (){
                 resetProgressBottomSheet();
               }),
-              button('Termos de Uso', Icons.note, (){
-
+              button('Política de privacidade', Icons.lock, () async{
+                final Uri _url = Uri.parse("https://github.com/DavaiApp/User-Terms/blob/main/Privacy%20Police%20Football%20Guesser.docx.pdf");
+                await launchUrl(_url);
+              }),
+              button('Termos de Uso', Icons.security, () async{
+                final Uri _url = Uri.parse("https://github.com/DavaiApp/User-Terms/blob/main/EULA%20Football%20Guesser.docx.pdf");
+                await launchUrl(_url);
               }),
               button('Entre em contato', Icons.contact_mail, (){
                 bottomSheet('Email: marcos.10palmeida@gmail.com');

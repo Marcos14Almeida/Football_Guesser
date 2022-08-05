@@ -28,8 +28,8 @@ class MapGameModeNames{
   mapStarsValue(String mode){
     Map map = {};
     map[modeSemErrar] = 10;
-    map[mode1minute] = 20;
-    map[mode4options] = 30;
+    map[mode1minute] = 15;
+    map[mode4options] = 20;
 
     return map[mode];
   }
@@ -42,8 +42,8 @@ class MapGameSettings{
   int difficulty = 0;
   String selectedNivel = '';
   int starCorrectValue = 0;
-  int stadiumSizeMin = 0;
-  int stadiumSizeMax = 200000;
+  double ovrMin = 0;
+  double ovrMax = 100;
   String mode = MapGameModeNames().mode1minute;
   String gameplayName = '';
   List<String> starNames = [];
@@ -52,20 +52,22 @@ class MapGameSettings{
   setDifficulty(int i){
     difficulty = i;
     if(difficulty == 0 ){
-      stadiumSizeMin = 0;
-      stadiumSizeMax = 200000;
+      //Modo sem nível
+      ovrMin = 0;
+      ovrMax = 100;
     }
     if(difficulty == 1 ){
-      stadiumSizeMin = 45000;
-      stadiumSizeMax = 100000;
+      //FÁCIL
+      ovrMin = 77;
+      ovrMax = 100;
     }
     if(difficulty == 2 ){
-      stadiumSizeMin = 30000;
-      stadiumSizeMax = 45000;
+      ovrMin = 70;
+      ovrMax = 77;
     }
     if(difficulty == 3 ){
-      stadiumSizeMin = 0;
-      stadiumSizeMax = 30000;
+      ovrMin = 0;
+      ovrMax = 70;
     }
   }
 
@@ -159,7 +161,6 @@ class MapGameSettings{
         }
 
       }
-      print(starNames);
     }
 
 
