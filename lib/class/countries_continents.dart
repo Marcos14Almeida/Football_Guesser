@@ -69,11 +69,13 @@ funcCountryContinents(String country){
   else if(country == Words.country.ethiopia){code = africa;}
   else if(country == Words.country.eritrea){code = africa;}
   else if(country == Words.country.estonia){code = europa;}
+  else if(country == Words.country.faroe){code = europa;}
   else if(country == Words.country.finland){code = europa;}
   else if(country == Words.country.france){code = europa;}
   else if(country == Words.country.gambia){code = africa;}
   else if(country == Words.country.gabon){code = africa;}
   else if(country == Words.country.georgia){code = europa;}
+  else if(country == Words.country.gibraltar){code = europa;}
   else if(country == Words.country.ghana){code = africa;}
   else if(country == Words.country.germany){code = europa;}
   else if(country == Words.country.grenada){code = americaNorte;}

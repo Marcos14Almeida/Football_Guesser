@@ -32,9 +32,9 @@ class _MapMenuState extends State<MapMenu> {
     onInit();
     super.initState();
   }
-  onInit() {
+  onInit() async{
     mapGameSettings = MapGameSettings();
-    update();
+    await update();
     setState((){});
   }
   update() async{
@@ -117,7 +117,7 @@ class _MapMenuState extends State<MapMenu> {
                                 mapGameSettings.selectedContinents = [Continents().africa];
                                 Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
                               }),
-                              gameButton('Ásia',Continents().asia,(){
+                              gameButton('Ásia e Oceania',Continents().asia,(){
                                 mapGameSettings.selectedContinents = [Continents().asia,Continents().oceania];
                                 Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
                               }),
@@ -135,7 +135,7 @@ class _MapMenuState extends State<MapMenu> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
 
-                      gameButton2('Exploração Livre',Icons.map,(){Navigator.push(context,MaterialPageRoute(builder: (context) => const MapPage()));}),
+                      gameButton2('Exploração Livre',Icons.map,(){Navigator.push(context,MaterialPageRoute(builder: (context) => MapPage(mapGameSettings: mapGameSettings)));}),
                       gameButton2('Lista de Clubes',Icons.list_alt,(){Navigator.push(context,MaterialPageRoute(builder: (context) => MapListAllClubs(mapGameSettings: mapGameSettings)));}),
                       gameButton2('Configurações',Icons.settings,(){Navigator.push(context,MaterialPageRoute(builder: (context) => const Settings()));}),
 

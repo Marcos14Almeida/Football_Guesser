@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:map_game/class/controller/gameplay_functions.dart';
+import 'package:map_game/class/controller/map_game_settings.dart';
 import 'package:map_game/class/flags_list.dart';
 import 'package:map_game/class/image_class.dart';
 import 'package:map_game/class/size.dart';
@@ -12,7 +14,8 @@ import 'package:map_game/values/club_details.dart';
 import 'package:map_game/widgets/back_button.dart';
 
 class MapPage extends StatefulWidget {
-  const MapPage({Key? key}) : super(key: key);
+  final MapGameSettings mapGameSettings;
+  const MapPage({Key? key, required this.mapGameSettings}) : super(key: key);
 
   @override
   State<MapPage> createState() => _MapPageState();
@@ -62,7 +65,7 @@ class _MapPageState extends State<MapPage> {
     clubDetails.map.forEach((key, value) {
       String clubName = key;
 
-      if(clubDetails.getCoordinate(clubName).latitude != 0){
+      if(Gameplay().isTeamPermitted(clubName,widget.mapGameSettings,clubDetails)){
         coordinates.add(clubDetails.getCoordinate(clubName));
 
         //ADD MARKER
@@ -95,70 +98,11 @@ class _MapPageState extends State<MapPage> {
       body: Stack(
         children: [
           Images().getWallpaper(),
+
           Column(
             children: [
-              Row(
-                children: [
-                  backButtonText(context, 'Mapa'),
-                  const Spacer(),
-                  showTimeline ?
-                      playTimeline ? Container(
-                    margin: const EdgeInsets.only(top:30.0),
-                    child: GestureDetector(
-                      onTap: (){
-                        playTimeline = false;
-                        setState((){});
-                      },
-                      child: const Icon(Icons.pause,size:35,color:Colors.white),
-                    ),
-                  ) : Container(
-                        margin: const EdgeInsets.only(top:30.0),
-                        child: GestureDetector(
-                          onTap: (){
-                            playTimeline = true;
-                            setState((){});
-                          },
-                          child: const Icon(Icons.play_arrow,size:35,color:Colors.white),
-                        ),
-                      )
-                          : Container(),
 
-
-                  Container(
-                    margin: const EdgeInsets.only(top:30.0),
-                    child: Column(
-                      children: [
-
-                        //MOSTRAR ANO
-                        showTimeline ? Text(yearTimeline.toString(),style: EstiloTextoBranco.text14,) : Container(),
-
-                        //TIMELINE BUTTON
-                        GestureDetector(
-                          onTap: (){
-                            showTimeline = true;
-                            playTimeline = true;
-                            yearTimeline = int.parse(controllerSimulationYear.text);
-                            clubsFoundedTimelapse();
-                            setState((){});
-                          },
-                          child: const Icon(Icons.timelapse,size:35,color:Colors.white),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top:30.0),
-                    child: GestureDetector(
-                      onTap: (){
-                        filterBottomMessage();
-                        setState((){});
-                      },
-                      child: const Icon(Icons.filter_alt,size:35,color:Colors.white),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                ],
-              ),
+              header(),
 
               Expanded(
                 child: GoogleMap(
@@ -170,7 +114,7 @@ class _MapPageState extends State<MapPage> {
 
                 initialCameraPosition: const CameraPosition(
                   target: LatLng(0, 0),
-                  zoom: 6.0,
+                  zoom: 3.0,
                 ),
                 onMapCreated: getClubsLocation,
                 markers: Set<Marker>.of(_markersShow),
@@ -179,6 +123,7 @@ class _MapPageState extends State<MapPage> {
 
             ],
           ),
+
           SizedBox(
             height: Sized(context).height,
             child: Column(
@@ -193,6 +138,7 @@ class _MapPageState extends State<MapPage> {
               ],
             ),
           ),
+
         ],
       ),
     );
@@ -230,6 +176,70 @@ class _MapPageState extends State<MapPage> {
     });
   }
 
+  Widget header(){
+    return               Container(
+      margin: const EdgeInsets.only(top:30),
+      child: Row(
+        children: [
+          const SizedBox(width: 8),
+          backButton(context),
+          SizedBox(
+            width: Sized(context).width*0.5,
+            child: const Text('Mapa',overflow:TextOverflow.ellipsis,style: EstiloTextoBranco.text20),
+          ),
+
+          const Spacer(),
+
+          showTimeline ?
+          playTimeline ? GestureDetector(
+            onTap: (){
+              playTimeline = false;
+              setState((){});
+            },
+            child: const Icon(Icons.pause,size:35,color:Colors.white),
+          ) : GestureDetector(
+            onTap: (){
+              playTimeline = true;
+              setState((){});
+            },
+            child: const Icon(Icons.play_arrow,size:35,color:Colors.white),
+          )
+              : Container(),
+
+
+          Column(
+            children: [
+
+              //MOSTRAR ANO
+              showTimeline ? Text(yearTimeline.toString(),style: EstiloTextoBranco.text14,) : Container(),
+
+              //TIMELINE BUTTON
+              GestureDetector(
+                onTap: (){
+                  showTimeline = true;
+                  playTimeline = true;
+                  yearTimeline = int.parse(controllerSimulationYear.text);
+                  clubsFoundedTimelapse();
+                  setState((){});
+                },
+                child: const Icon(Icons.timelapse,size:35,color:Colors.white),
+              ),
+            ],
+          ),
+          GestureDetector(
+            onTap: (){
+              filterBottomMessage();
+              setState((){});
+            },
+            child: const Icon(Icons.filter_alt,size:35,color:Colors.white),
+          ),
+
+          const SizedBox(width: 10),
+
+        ],
+      ),
+    );
+  }
   Widget buttonZoomOut(){
     return GestureDetector(
       onTap: (){

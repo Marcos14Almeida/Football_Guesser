@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:map_game/class/image_class.dart';
 import 'package:map_game/class/controller/map_game_settings.dart';
 import 'package:map_game/pages/config/map_config2.dart';
+import 'package:map_game/pages/map_exploration.dart';
 import 'package:map_game/pages/map_list_all_clubs.dart';
 import 'package:map_game/widgets/theme/colors.dart';
 import 'package:map_game/widgets/theme/textstyle.dart';
@@ -53,6 +54,11 @@ class _MapConfig1State extends State<MapConfig1> {
               }),
 
               const Spacer(),
+              optionsRow('Exploração Livre',Icons.map,MapGameModeNames().modeSemErrar,(){
+                Navigator.push(context,MaterialPageRoute(builder: (context) => MapPage(mapGameSettings: widget.mapGameSettings)));
+              },
+                hasStar: false,
+              ),
               optionsRow('Lista de Clubes',Icons.list_alt,MapGameModeNames().modeSemErrar,(){
                 Navigator.push(context,MaterialPageRoute(builder: (context) => MapListAllClubs(mapGameSettings: widget.mapGameSettings)));
               },

@@ -3170,8 +3170,8 @@ class ClubDetails{
     //CONGO
     map[_name.diablesNoirs] = [ClubColors(Colors.black,Colors.yellow),pattern.solid,Coordinates(-4.27254194, 15.24862744),
       'Stade Alphonse Massemba-Débat',33037,1950,_country.congo,64.2,[]];
-    map[_name.otoho] = [ClubColors(Colors.blue,Colors.yellow),pattern.solid,Coordinates(5.16203117, -52.6455985),
-      'Complexe Omnisports d’Oyo',1629,2014,_country.congo,64.0,[]];
+    map[_name.otoho] = [ClubColors(Colors.blue,Colors.yellow),pattern.solid,Coordinates(-4.15460467, 15.3242211),
+      'Kintélé Sports Complex',60055,2014,_country.congo,64.0,[]];
     map[_name.talangai] = [ClubColors(Colors.black,Colors.black),pattern.solid,Coordinates(-4.27341746, 15.2487253),
       'Stade Alphonse Massemba-Débat',33037,1935,_country.congo,62.7,[]];
     //RD CONGO
