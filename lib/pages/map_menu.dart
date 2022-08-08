@@ -33,15 +33,15 @@ class _MapMenuState extends State<MapMenu> {
     super.initState();
   }
   onInit() async{
-    mapGameSettings = MapGameSettings();
     await update();
-    setState((){});
   }
   update() async{
+    mapGameSettings = MapGameSettings();
     mapGameSettings.setDifficulty(0);
     await mapGameSettings.getRecords();
     mapGameSettings.getStarsNames();
     loaded=true;
+    setState((){});
   }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -51,9 +51,7 @@ class _MapMenuState extends State<MapMenu> {
   Widget build(BuildContext context) {
 
     if(loaded == false){
-      //POR ALGUM MOTIVO, ESSA PAGINA TA RECARREGANDO TODA HO
       update();
-      setState((){});
     }
 
     return Scaffold(
@@ -90,36 +88,36 @@ class _MapMenuState extends State<MapMenu> {
                         children: [
                               gameButton('Nível 1',MapGameModeNames().nivel1,(){
                                 mapGameSettings.setDifficulty(1);
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings))).whenComplete(() => update());
                               }),
                               gameButton('Nível 2',MapGameModeNames().nivel2,(){
                                 mapGameSettings.setDifficulty(2);
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings))).whenComplete(() => update());
                               }),
                               gameButton('Nível 3',MapGameModeNames().nivel3,(){
                                 mapGameSettings.setDifficulty(3);
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings))).whenComplete(() => update());
                               }),
                           const SizedBox(height: 12),
                               gameButton('Europa',Continents().europa,(){
                                 mapGameSettings.selectedContinents = [Continents().europa];
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings))).whenComplete(() => update());
                               }),
                               gameButton('América do Sul',Continents().americaSul,(){
                                 mapGameSettings.selectedContinents = [Continents().americaSul];
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings))).whenComplete(() => update());
                               }),
                               gameButton('América do Norte',Continents().americaNorte,(){
                                 mapGameSettings.selectedContinents = [Continents().americaNorte];
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings))).whenComplete(() => update());
                               }),
                               gameButton('África', Continents().africa,(){
                                 mapGameSettings.selectedContinents = [Continents().africa];
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings))).whenComplete(() => update());
                               }),
                               gameButton('Ásia e Oceania',Continents().asia,(){
                                 mapGameSettings.selectedContinents = [Continents().asia,Continents().oceania];
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings)));
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => MapConfig1(mapGameSettings: mapGameSettings))).whenComplete(() => update());
                               }),
 
                         ],

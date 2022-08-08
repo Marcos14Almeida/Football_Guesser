@@ -154,7 +154,7 @@ class _MapGameplayClubStadiumState extends State<MapGameplayClubStadium> {
                 widget.mapGameSettings,
                 SizedBox(width: Sized(context).width*0.55,child: Row(
                   children: [
-                    Expanded(child: Text(city+clubMarkerPosition.toString(),textAlign:TextAlign.center,overflow:TextOverflow.ellipsis,maxLines:2,style: EstiloTextoBranco.text16)),
+                    Expanded(child: Text(city,textAlign:TextAlign.center,overflow:TextOverflow.ellipsis,maxLines:2,style: EstiloTextoBranco.text16)),
                   ],
                 )),
               ),
