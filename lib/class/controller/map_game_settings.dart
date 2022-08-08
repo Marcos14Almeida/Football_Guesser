@@ -22,8 +22,17 @@ class MapGameModeNames{
   String location = 'Location';
 
   String modeSemErrar = 'Sem Errar';
-  String mode1minute = '1 minuto';
+  String mode1minute = 'ContraRelogio';
   String mode4options = 'Normal';
+
+  String you1 = 'Leigo';
+  String you2 = 'Amador';
+  String you3 = 'Juvenil';
+  String you4 = 'Profissional';
+  String you5 = 'Titular';
+  String you6 = 'Craque';
+  String you7 = 'Seleção';
+  String you8 = 'GOAT';
 
   mapStarsValue(String mode){
     Map map = {};
@@ -32,6 +41,21 @@ class MapGameModeNames{
     map[mode4options] = 20;
 
     return map[mode];
+  }
+
+  mapStarsValueYou(int stars){
+
+    String frase = '';
+    if(stars <5){return you1;}
+    else if(stars <12*1){return you2;}
+    else if(stars <12*2){return you3;}
+    else if(stars <12*3){return you4;}
+    else if(stars <12*4){return you5;}
+    else if(stars <12*5){return you6;}
+    else if(stars <12*6){return you7;}
+    else if(stars <=12*8){return you8;}
+
+    return frase;
   }
 
 }
@@ -48,6 +72,7 @@ class MapGameSettings{
   String gameplayName = '';
   List<String> starNames = [];
   List<String> records = [];
+  int maxStars = 12;
 
   setDifficulty(int i){
     difficulty = i;

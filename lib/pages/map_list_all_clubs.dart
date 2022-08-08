@@ -37,9 +37,7 @@ class _MapListAllClubsState extends State<MapListAllClubs> {
     countryOptions = [];
 
     showList = keysIterable;
-    showList = showList.where((clubName) => clubDetails.getCoordinate(clubName).latitude != 0);
-    showList = showList.where((clubName) => clubDetails.getOverall(clubName) > widget.mapGameSettings.ovrMin);
-    showList = showList.where((clubName) => clubDetails.getOverall(clubName) < widget.mapGameSettings.ovrMax);
+    filterShowListClubs();
 
     clubDetails.map.forEach((key, value) {
       if(showList.contains(key)) {
@@ -58,16 +56,22 @@ class _MapListAllClubsState extends State<MapListAllClubs> {
     setState((){});
   }
 
+  filterShowListClubs(){
+    showList = showList.where((clubName) => clubDetails.getCoordinate(clubName).latitude != 0);
+    showList = showList.where((clubName) => clubDetails.getOverall(clubName) > widget.mapGameSettings.ovrMin);
+    showList = showList.where((clubName) => clubDetails.getOverall(clubName) < widget.mapGameSettings.ovrMax);
+
+  }
+
 ////////////////////////////////////////////////////////////////////////////
 //                               BUILD                                    //
 ////////////////////////////////////////////////////////////////////////////
   @override
   Widget build(BuildContext context) {
+
     //Filtra os clubes do país
     showList = keysIterable.where((clubName) => selectedCountry == clubDetails.getCountry(clubName));
-    showList = showList.where((clubName) => clubDetails.getCoordinate(clubName).latitude != 0);
-    showList = showList.where((clubName) => clubDetails.getOverall(clubName) > widget.mapGameSettings.ovrMin);
-    showList = showList.where((clubName) => clubDetails.getOverall(clubName) < widget.mapGameSettings.ovrMax);
+    filterShowListClubs();
 
     return Scaffold(
       body: Stack(

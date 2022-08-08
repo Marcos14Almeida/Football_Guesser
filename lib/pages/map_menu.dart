@@ -32,8 +32,7 @@ class _MapMenuState extends State<MapMenu> {
     onInit();
     super.initState();
   }
-
-  onInit() async{
+  onInit() {
     mapGameSettings = MapGameSettings();
     update();
     setState((){});
@@ -43,7 +42,6 @@ class _MapMenuState extends State<MapMenu> {
     await mapGameSettings.getRecords();
     mapGameSettings.getStarsNames();
     loaded=true;
-    setState((){});
   }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -51,17 +49,24 @@ class _MapMenuState extends State<MapMenu> {
 ////////////////////////////////////////////////////////////////////////////
   @override
   Widget build(BuildContext context) {
-    update();
+
+    if(loaded == false){
+      //POR ALGUM MOTIVO, ESSA PAGINA TA RECARREGANDO TODA HO
+      update();
+      setState((){});
+    }
 
     return Scaffold(
         body: Stack(
           children: [
+            
             Images().getWallpaper(),
 
             Column(
               children: [
                 const SizedBox(height: 35),
                 const Text('FOOTBALL GUESSER',style: EstiloTextoBranco.text30),
+                //Text('Você é: '+MapGameModeNames().mapStarsValueYou(mapGameSettings.starNames.length),style: EstiloTextoBranco.text16),
 
                 loaded ? Expanded(
                   child: Container(
@@ -148,8 +153,7 @@ class _MapMenuState extends State<MapMenu> {
 //                               WIDGETS                                  //
 ////////////////////////////////////////////////////////////////////////////
 
-Widget gameButton(String text, selectedNivel, Function function){
-    int maxStars = 12;
+Widget gameButton(String text,String selectedNivel, Function function){
 
     int nStars = mapGameSettings.hasStars9(
       nivel: selectedNivel,
@@ -162,6 +166,7 @@ Widget gameButton(String text, selectedNivel, Function function){
     }catch(e){
       hasContinent = false;
     }
+
 
     return Container(
       width: Sized(context).width-50,
@@ -180,7 +185,12 @@ Widget gameButton(String text, selectedNivel, Function function){
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              hasContinent ? Image.asset(Images().getMenuImages(selectedNivel),height: 35,width: 35) : Container(width: 35),
+              hasContinent
+                  ? Image.asset(Images().getMenuImages(selectedNivel),height: 35,width: 35)
+                  : Container(height:35, width: 35,
+                              padding: const EdgeInsets.all(2),
+                                child: Images().getNumberMenuDrawing(selectedNivel),
+                    ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -189,8 +199,8 @@ Widget gameButton(String text, selectedNivel, Function function){
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.star,color: nStars == maxStars ? Colors.yellow : Colors.white),
-                        Text(nStars.toString()+'/'+maxStars.toString(),textAlign:TextAlign.center,style: EstiloTextoBranco.text14,),
+                        Icon(Icons.star,color: nStars == mapGameSettings.maxStars ? Colors.yellow : Colors.white),
+                        Text(nStars.toString()+'/'+ mapGameSettings.maxStars.toString(),textAlign:TextAlign.center,style: EstiloTextoBranco.text14,),
 
                       ],
                     )

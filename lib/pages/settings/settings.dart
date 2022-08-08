@@ -35,7 +35,7 @@ class _SettingsState extends State<Settings> {
               backButtonText(context, 'Configurações'),
 
               button('Sobre', Icons.info_outline, (){
-                bottomSheet('Seja o craque do futebol!!!\n\nAcerte onde fica cada estádio, descubra a qual clube pertence cada estádio, acerte o local de cada clube. Jogue diferentes níveis, com diferentes continentes e em diferentes modos para vencer o jogo e ser o GOAT de Football Guesser. \n\nGame feito com muito amor por Marcos P. Almeida em 08/2022. 😍💕!!!');
+                bottomSheet('Seja o craque do futebol!!!\n\nAcerte onde fica cada estádio, descubra a qual clube pertence cada estádio, acerte o local de cada clube. Jogue diferentes níveis, com diferentes continentes e em diferentes modos para vencer o jogo e ser o GOAT de Football Guesser. \n\nGame feito por Marcos P. Almeida em 08/2022. 😍💕!!!');
               }),
               button('Resetar o progresso', Icons.delete, (){
                 resetProgressBottomSheet();

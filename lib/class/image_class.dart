@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:map_game/class/controller/map_game_settings.dart';
 import 'package:map_game/class/countries_continents.dart';
 import 'package:map_game/widgets/crest.dart';
+import 'package:map_game/widgets/theme/textstyle.dart';
 import 'package:map_game/widgets/uniforme.dart';
 
 class Images{
@@ -63,9 +65,37 @@ class Images{
     map[Continents().africa] = 'assets/continents/africa.png';
     map[Continents().oceania] = 'assets/continents/asia.png';
 
-
       return map[continent];
-
   }
+
+  Widget getNumberMenuDrawing(String selectedNivel){
+
+    int lvlNumber = 1;
+    if(selectedNivel == MapGameModeNames().nivel2){
+      lvlNumber = 2;
+    }else if(selectedNivel == MapGameModeNames().nivel3){
+      lvlNumber = 3;
+    }
+
+    return Container(
+        decoration: BoxDecoration(
+          color: Colors.green,
+            border: Border.all(
+              color: Colors.yellow.shade200,
+              width: 2,
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+          gradient: const LinearGradient(
+            colors: [Colors.green,Colors.greenAccent],
+            stops: [0.6, 1],
+            begin: Alignment.bottomLeft,
+            end: Alignment.centerRight,
+          )
+        ),
+        child: Center(child: Text(lvlNumber.toString(),style: EstiloTextoBranco.text20)),
+    );
+  }
+
+
 
 }

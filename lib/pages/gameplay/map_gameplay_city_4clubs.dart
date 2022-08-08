@@ -154,8 +154,8 @@ class _GameplayCity4ClubsState extends State<GameplayCity4Clubs> {
                   tiltGesturesEnabled: false,
                   indoorViewEnabled: false,
                   rotateGesturesEnabled: false,
-                  zoomGesturesEnabled: false, //SEM ZOOM
-                  zoomControlsEnabled: false, //SEM ZOOM
+                  //zoomGesturesEnabled: false, //SEM ZOOM
+                  //zoomControlsEnabled: false, //SEM ZOOM
                   initialCameraPosition: const CameraPosition(
                     target: LatLng(10, 10),
                     zoom: 5.0,
