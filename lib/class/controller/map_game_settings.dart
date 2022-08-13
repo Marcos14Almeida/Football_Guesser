@@ -83,12 +83,12 @@ class MapGameSettings{
     }
     if(difficulty == 1 ){
       //FÁCIL
-      ovrMin = 77;
+      ovrMin = 76;
       ovrMax = 100;
     }
     if(difficulty == 2 ){
       ovrMin = 70;
-      ovrMax = 77;
+      ovrMax = 76;
     }
     if(difficulty == 3 ){
       ovrMin = 0;

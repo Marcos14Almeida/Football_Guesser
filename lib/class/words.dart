@@ -119,7 +119,7 @@ class CountryNames {
   String get madagascar => 'Madagascar';
   String get malawi => 'Malawi';
   String get malaysia => 'Malaysia';
-  String get maldivas => 'Maldives';
+  String get maldives => 'Maldives';
   String get mali => 'Mali';
   String get malta => 'Malta';
   String get mauritania => 'Mauritania';
@@ -145,6 +145,7 @@ class CountryNames {
   String get norway => 'Norway';
   String get northernIreland => 'Northern Ireland';
   String get oman => 'Oman';
+  String get palestine => 'Palestine';
   String get pakistan => 'Pakistan';
   String get panama => 'Panama';
   String get papua => 'Papua New Guinea';

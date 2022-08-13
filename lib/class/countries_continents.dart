@@ -117,7 +117,7 @@ funcCountryContinents(String country){
   else if(country == Words.country.macedonia){code = europa;}
   else if(country == Words.country.madagascar){code = africa;}
   else if(country == Words.country.malaysia){code = asia;}
-  else if(country == Words.country.maldivas){code = africa;}
+  else if(country == Words.country.maldives){code = asia;}
   else if(country == Words.country.mali){code = africa;}
   else if(country == Words.country.malawi){code = africa;}
   else if(country == Words.country.malta){code = europa;}

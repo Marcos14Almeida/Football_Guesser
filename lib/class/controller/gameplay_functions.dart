@@ -86,7 +86,7 @@ class Gameplay{
     double ovr = clubDetails.getOverall(clubName);
     if(clubDetails.getCoordinate(clubName).latitude != 0 &&
         mapGameSettings.selectedContinents.contains(continent) &&
-        mapGameSettings.ovrMin < ovr &&
+        mapGameSettings.ovrMin <= ovr &&
         mapGameSettings.ovrMax > ovr
     ){
       return true;
