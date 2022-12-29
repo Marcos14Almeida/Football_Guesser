@@ -19,3 +19,12 @@ Depois rode o código digitando no terminal
 -flutter run
 
 ## Screenshot
+
+<p align="center">
+  <img src="https://github.com/Marcos14Almeida/Football_Guesser/blob/master/assets/logo.png" width="200" title="Screenshot">
+  </a>
+</p> 
+<p align="center">
+  <img src="https://github.com/Marcos14Almeida/Football_Guesser/blob/master/assets/logo2.png" width="200" title="Screenshot">
+  </a>
+</p> 
