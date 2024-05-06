@@ -13,7 +13,7 @@ O jogo consiste em adivinhar o estádio de um time de futebol, adivinhar o time 
 Você precisa ter o Flutter devidamente instalado no seu computador, depois disso: 
 
 copie o projeto digiando no terminal:
--git clone https://github.com/Marcos14Almeida/FIFA-Flutter/
+-git clone https://github.com/Marcos14Almeida/Football_Guesser
 
 Depois rode o código digitando no terminal
 -flutter run
